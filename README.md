@@ -13,3 +13,8 @@ Here's an example of the cooling of a thrust model:
 
 ![Fowler_thrust](https://user-images.githubusercontent.com/30849698/164211427-734a2e79-ef8e-466d-b2a9-016c539c7b31.png)
 
+Or, if subduction floats (sinks?) your boat, here's one we prepared earlier: 
+
+![subduction](https://user-images.githubusercontent.com/30849698/164226119-fc9efb78-9431-4759-8e3d-37d3f07e10af.png)
+
+Full code in the ipynb directory. Enjoy. Or not. Up to you, really. 
