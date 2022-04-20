@@ -1,7 +1,7 @@
 # planet_LB
 A python distribution for lattice-boltzmann modelling of planetary processes
 
-Currently has a 1D solver for the advection-diffusion problem.
+Currently has 1D (D1Q2) and 2D (D2Q9) solvers for the advection-diffusion problems, from plate cooling and contact metamorphism, to subduction zones.
 
 Install:
 
