@@ -18,3 +18,12 @@ Or, if subduction floats (sinks?) your boat, here's one we prepared earlier:
 ![subduction](https://user-images.githubusercontent.com/30849698/164226119-fc9efb78-9431-4759-8e3d-37d3f07e10af.png)
 
 Full code in the ipynb directory. Enjoy. Or not. Up to you, really. 
+
+
+# A few worthy references
+
+Fowler, C.M.R., The solid Earth: An introduction to global geophysics (2004). (A great entry-level drug into the broader world of geodynamics. Some wonderful examples from her seminal 1980's papers on heat flow - borrowed from in examples here).
+
+Turcotte, D., Schubert, G., Geodynamics (2001). (Gold standard geodynamics textbook).
+
+Mohamad, A.A. Lattice Boltzmann Method: Fundamentals and Engineering Applications with Computer Codes (2011). (A nice and very practical introduction to Lattice Boltzmann methods).
