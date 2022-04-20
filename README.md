@@ -7,7 +7,7 @@ Install:
 
 pip install planet_LB
 
-See the ipynb for usage and examples.
+See the ipynb for usage and examples, and some 1D and 2D benchmarks.
 
 Here's an example of the cooling of a thrust model:
 
