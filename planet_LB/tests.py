@@ -24,17 +24,8 @@ TSurf = 0.0 #Surface temperature
 
 # Simulation 1
 
-T,x = pLB.init_1D_LB(dt,dx,tstep,m,Tinit,TSurf,H)
-
-# Simulation II - an oceanic crust made up of granite in the top 10km, with mantle heat production beneath that:
-# Heat production. 
-H1 = np.ones_like(x) * 1e-12  #Note H is now being used as an array - can be constant or x-like array
-H1[ x <= 10e3] = 9.7e-9
-
-# Note H(W/kg)*dens = W/m3 = qg.
-# Source S = qg/dens*C --> H*dens/dens*Cp --> H/Cp
-Cp = 1000.0
-H1 /= Cp
-
-T1,x1 = pLB.init_1D_LB(dt,dx,tstep,m,Tinit,TSurf,H1)
+LB = pLB.init_1D_LB(dt,dx,tstep,m,Tinit,TSurf,H)
+T=pLB.LB1D(LB)
+#print(LB['T'])
+print(T)
 
