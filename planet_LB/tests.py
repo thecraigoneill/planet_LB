@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import special
 
-def test1:
+def test1():
     # Initialise constants and object
     M2S = p_LB.Myr2s
     pLB = p_LB.planet_LB()
