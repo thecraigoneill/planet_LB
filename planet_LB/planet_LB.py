@@ -63,6 +63,7 @@ class planet_LB():
       'f2':f2,
       'feq':feq,
       'x':x,
+      'T':T
     }
 
     #T = self.LB1D(LB_struct)
