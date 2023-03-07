@@ -287,6 +287,28 @@ class planet_LB():
     }
     return LB_struct_2D
 
+  def reinit_T_f(self,LB_struct_2D,T_init):
+      LB_struct_2D['T'] = T_init
+      T=T_init
+      w=np.zeros(9)
+      w[0]=4./9.
+      w[1]=w[2]=w[3]=w[4]=1./9.
+      w[5]=w[6]=w[7]=w[8]=1./36.
+
+
+      f[0,:,:] =  w[0]*T
+      f[1,:,:] =  w[1]*T
+      f[2,:,:] =  w[2]*T
+      f[3,:,:] =  w[3]*T
+      f[4,:,:] =  w[4]*T
+      f[5,:,:] =  w[5]*T
+      f[6,:,:] =  w[6]*T
+      f[7,:,:] =  w[7]*T
+      f[8,:,:] =  w[8]*T
+      LB_struct_2D['f'] = f
+      return LB_struct_2D
+
+
   def LB_D2Q9_T(self,LB_struct_2D):
     n = LB_struct_2D['n']
     m = LB_struct_2D['m']
