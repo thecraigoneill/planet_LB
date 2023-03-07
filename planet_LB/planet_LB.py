@@ -289,6 +289,7 @@ class planet_LB():
 
   def reinit_T_f(self,LB_struct_2D,T_init):
       LB_struct_2D['T'] = T_init
+      f = LB_struct_2D['f']
       T=T_init
       w=np.zeros(9)
       w[0]=4./9.
