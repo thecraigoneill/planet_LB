@@ -46,8 +46,8 @@ $$ f_i(r+c_i \Delta t, t + \Delta t) = f_i(r,t) + (\Delta t/{\tau})[f^{eq}_i(r,t
 
 The underlying grid is structured as shown in Figure 3, and the node numbering scheme is used both in the collision operator step (each node is weighted differently relative to the cell centre), and in the streaming step with advects the underlying distribution function, subject to boundary conditions. For full details of Lattice-Boltzmann implementation, see @Mohamad:2019.
 
-![Figure 3. Examples of LB grid structure and node numbering](D1Q2_D2Q9.png)
 
+![Figure 3. Examples of LB grid structure and node numbering](D1Q2_D2Q9.png)
 *Figure 3. Examples of LB grid structure and node numbering*
 
 As noted, the library can be installed via pip (*pip install planet_LB*), and extensive examples of usage are found in the associated ipynbs on github. The code itself develops a Lattice-Boltzmann data structure which contains the details of the simulation parameters, grid, initial conditions, and boundary conditions, and this may be iteratively sent to an appropriate solver (D2Q9, or D1Q2, for either diffusion, advection, or some combination of these depending on the geodynamic problem), allowing the time-evolution of a simulation to be tracked. As the future system state depends on its current state, system information is updated and interatively solved within a loop of small timesteps, defined by flow stability conditions (furthers details of the timestepping are developed in the file *thrust_fault.ipynb*).
