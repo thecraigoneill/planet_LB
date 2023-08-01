@@ -33,7 +33,7 @@ class planet_LB():
         f2[m] = f2[m-1]
     return T
 
-  def init_1D_LB(self,dt,dx,mstep,m,Tinit,TSurf,H):
+  def init_1D_LB(self,dt,dx,mstep,m,Tinit,TSurf,H,Qbase,K,k):
     f1 = np.array([])
     f2 = np.array([])
     feq = np.array([])
@@ -41,12 +41,12 @@ class planet_LB():
     scale=(60*60*24*365.25*1e6)
     x = np.arange(0,dx*(m+1),dx)
     ck=dx/dt
-    csq=ck*ck
-    K=1e-6
+    cksq=ck*ck
+    #K=1e-6
     #k=3
     #flux=80e-3
-
-    omega=1.0/(K/(dt*csq)+0.5) 
+    csq=1/np.sqrt(2)
+    omega=1.0/(K/(dt*cksq)+0.5) 
     T = np.ones((m+1))*Tinit
     f1 = 0.5*T
     f2 = 0.5*T
@@ -63,13 +63,50 @@ class planet_LB():
       'f2':f2,
       'feq':feq,
       'x':x,
-      'T':T
+      'Qbase':Qbase,
+      'K':K,
+      'k':k,
+      'dx':dx,
+      'csq':csq,
     }
-
-    #T = self.LB1D(LB_struct)
-
-    #return(T,x)
     return(LB_struct)
+
+  def LB1D_Qbase(self,LB_struct):
+    mstep = LB_struct['mstep']
+    m = LB_struct['m']
+    dt = LB_struct['dt']
+    dx = LB_struct['dx']
+    f1  = LB_struct['f1']
+    f2 = LB_struct['f2']
+    H = LB_struct['H']
+    K=LB_struct['K']
+    omega = LB_struct['omega']
+    TSurf = LB_struct['TSurf']
+    Qbase = LB_struct['Qbase']
+    k = LB_struct['k']
+    #csq = LB_struct['csq']
+    c=dx/dt
+    csq = LB_struct['csq']
+
+    #print("Flux scale 1:",Qbase/(k*omega),csq)
+    #print("Flux scale 2:",Qbase*dx/k)
+    timestep = dt*np.arange(1,mstep+1,1)
+    n = np.arange(0,m+1,1)
+    for kk in timestep:
+        #Collision step
+        T = f1 + f2
+        feq = 0.5*T
+        # cs^2 = 0.5
+        f1 = (1.0 - omega)*f1 + omega*feq + dt*0.5*H   # H is heat production
+        f2 = (1.0 - omega)*f2 + omega*feq + dt*0.5*H   # Note 
+        #Streaming step
+        f1 = np.roll(f1,1)
+        f2=np.roll(f2,-1)
+        #Boundary condition
+        f1[0] = TSurf - f2[0]   #constant temperature wall at x=0
+        f2[m] =  f1[m-1] + f2[m-1] - f1[m] + Qbase*dx/(k)        # von neumann boundary condition, x=L,
+    return T
+
 
   #@jit(nopython=True)
   def loopy_loop(self,n,m,vx,vy,cx,cy,rho,w):
@@ -102,15 +139,15 @@ class planet_LB():
 
     feq = self.loopy_loop(n,m,vx,vy,cx,cy,rho,w)
     #Collision step
-    f[0,:,:] = (1.0 - omegaV)*f[0,:,:] + omegaV*feq[0,:,:]  + dt*0.5*H
-    f[1,:,:] = (1.0 - omegaV)*f[1,:,:] + omegaV*feq[1,:,:]  + dt*0.5*H
-    f[2,:,:] = (1.0 - omegaV)*f[2,:,:] + omegaV*feq[2,:,:]  + dt*0.5*H
-    f[3,:,:] = (1.0 - omegaV)*f[3,:,:] + omegaV*feq[3,:,:]  + dt*0.5*H
-    f[4,:,:] = (1.0 - omegaV)*f[4,:,:] + omegaV*feq[4,:,:]  + dt*0.5*H
-    f[5,:,:] = (1.0 - omegaV)*f[5,:,:] + omegaV*feq[5,:,:]  + dt*0.5*H
-    f[6,:,:] = (1.0 - omegaV)*f[6,:,:] + omegaV*feq[6,:,:]  + dt*0.5*H
-    f[7,:,:] = (1.0 - omegaV)*f[7,:,:] + omegaV*feq[7,:,:]  + dt*0.5*H
-    f[8,:,:] = (1.0 - omegaV)*f[8,:,:] + omegaV*feq[8,:,:]  + dt*0.5*H
+    f[0,:,:] = (1.0 - omegaV)*f[0,:,:] + omegaV*feq[0,:,:]  + dt*w[0]*H
+    f[1,:,:] = (1.0 - omegaV)*f[1,:,:] + omegaV*feq[1,:,:]  + dt*w[1]*H
+    f[2,:,:] = (1.0 - omegaV)*f[2,:,:] + omegaV*feq[2,:,:]  + dt*w[2]*H
+    f[3,:,:] = (1.0 - omegaV)*f[3,:,:] + omegaV*feq[3,:,:]  + dt*w[3]*H
+    f[4,:,:] = (1.0 - omegaV)*f[4,:,:] + omegaV*feq[4,:,:]  + dt*w[4]*H
+    f[5,:,:] = (1.0 - omegaV)*f[5,:,:] + omegaV*feq[5,:,:]  + dt*w[5]*H
+    f[6,:,:] = (1.0 - omegaV)*f[6,:,:] + omegaV*feq[6,:,:]  + dt*w[6]*H
+    f[7,:,:] = (1.0 - omegaV)*f[7,:,:] + omegaV*feq[7,:,:]  + dt*w[7]*H
+    f[8,:,:] = (1.0 - omegaV)*f[8,:,:] + omegaV*feq[8,:,:]  + dt*w[8]*H
 
     #Streaming step  # 
 
@@ -326,7 +363,17 @@ class planet_LB():
 
     for i,z in np.ndenumerate(w):
         feq[i,:,:] = w[i]*T
-    f = (1.0 - omega)*f + omega*feq + dt*0.5*H
+    #f = (1.0 - omega)*f + omega*feq + dt*0.5*H
+    f[0,:,:] = (1.0 - omega)*f[0,:,:] + omega*feq[0,:,:]  + dt*w[0]*H
+    f[1,:,:] = (1.0 - omega)*f[1,:,:] + omega*feq[1,:,:]  + dt*w[1]*H
+    f[2,:,:] = (1.0 - omega)*f[2,:,:] + omega*feq[2,:,:]  + dt*w[2]*H
+    f[3,:,:] = (1.0 - omega)*f[3,:,:] + omega*feq[3,:,:]  + dt*w[3]*H
+    f[4,:,:] = (1.0 - omega)*f[4,:,:] + omega*feq[4,:,:]  + dt*w[4]*H
+    f[5,:,:] = (1.0 - omega)*f[5,:,:] + omega*feq[5,:,:]  + dt*w[5]*H
+    f[6,:,:] = (1.0 - omega)*f[6,:,:] + omega*feq[6,:,:]  + dt*w[6]*H
+    f[7,:,:] = (1.0 - omega)*f[7,:,:] + omega*feq[7,:,:]  + dt*w[7]*H
+    f[8,:,:] = (1.0 - omega)*f[8,:,:] + omega*feq[8,:,:]  + dt*w[8]*H
+
     #Streaming step  # 
     f[2,:,:] = np.roll(f[2,:,:],1,axis=1)
     f[6,:,:] = np.roll(f[6,:,:],-1,axis=0)
@@ -359,6 +406,183 @@ class planet_LB():
     f[4,:,m] = w[4]*T_top + w[2]*T_top - f[2,:,m]
     f[8,:,m] = w[8]*T_top + w[6]*T_top - f[6,:,m]
     #f[0,:,0] = 0.0
+
+
+    T = f[0,:,:] + f[1,:,:] + f[2,:,:] + f[3,:,:] + f[4,:,:] +f[5,:,:] + f[6,:,:]+f[7,:,:]+f[8,:,:]
+    LB_struct_2D['T'] = T
+    LB_struct_2D['f'] = f
+    return LB_struct_2D
+
+  def LB_D2Q9_init_ThermHF(self,dt,m,n,dx,dy,mstep,TSurf,Tinit,H,Qbase,kappa,k1):
+    # Initiatialise grid
+    x = np.arange(0,dx*(n+1),dx)
+    y = np.arange(0,dy*(m+1),dy)
+    #print(y)
+    X,Y = np.meshgrid(x,y) # Change rows to columns
+    X=X.T
+    Y=Y.T
+
+    f=np.zeros((9,n+1,m+1))
+    feq=np.zeros((9,n+1,m+1))
+
+    #global rho
+    T=np.ones((n+1,m+1))*Tinit
+
+    w=np.zeros(9)
+    w[0]=4./9.
+    w[1]=w[2]=w[3]=w[4]=1./9.
+    w[5]=w[6]=w[7]=w[8]=1./36.
+
+
+    f[0,:,:] =  w[0]*T
+    f[1,:,:] =  w[1]*T
+    f[2,:,:] =  w[2]*T
+    f[3,:,:] =  w[3]*T
+    f[4,:,:] =  w[4]*T
+    f[5,:,:] =  w[5]*T
+    f[6,:,:] =  w[6]*T
+    f[7,:,:] =  w[7]*T
+    f[8,:,:] =  w[8]*T
+    
+
+    ck=dx/dt
+    csq=ck*ck 
+    omega=1.0/(3*kappa/(dt*csq)+0.5) 
+    #T = np.ones((m+1))*Tinit
+    #   self,dt,dx,mstep,m,Tinit,TSurf,H
+
+    LB_struct_2D = {
+      'dt': dt,
+      'dx':dx,
+      'dy':dy,
+      'mstep': mstep,
+      'm': m,
+      'n':n,
+      'T': T,
+      'H': H,
+      'kappa':kappa,
+      'w':w,
+      'omega': omega,
+      'f':f,
+      'feq':feq,
+      'x':X,
+      'y':Y,
+      'T_top':TSurf,
+      'T_base':Tinit,
+      'Qbase':Qbase,
+      'csq':csq,
+      'k':k1,
+
+    }
+    return LB_struct_2D
+
+  def LB_D2Q9_T_HF(self,LB_struct_2D,topflux,botflux):
+    n = LB_struct_2D['n']
+    m = LB_struct_2D['m']
+    T = LB_struct_2D['T']
+    dt = LB_struct_2D['dt']
+    w = LB_struct_2D['w']
+    H = LB_struct_2D['H']
+    omega = LB_struct_2D['omega']
+    f = LB_struct_2D['f']
+    feq = LB_struct_2D['feq']
+    T_top = LB_struct_2D['T_top']
+    T_base = LB_struct_2D['T_base']
+    Qbase =  LB_struct_2D['Qbase']
+    k= LB_struct_2D['k']
+    dy =  LB_struct_2D['dy']
+
+
+
+    for i,z in np.ndenumerate(w):
+        feq[i,:,:] = w[i]*T
+    # Collision step
+    #f = (1.0 - omega)*f + omega*feq + dt*0.5*H
+    f[0,:,:] = (1.0 - omega)*f[0,:,:] + omega*feq[0,:,:]  + dt*w[0]*H*(1/np.sqrt(3))
+    f[1,:,:] = (1.0 - omega)*f[1,:,:] + omega*feq[1,:,:]  + dt*w[1]*H*(1/np.sqrt(3))
+    f[2,:,:] = (1.0 - omega)*f[2,:,:] + omega*feq[2,:,:]  + dt*w[2]*H*(1/np.sqrt(3))
+    f[3,:,:] = (1.0 - omega)*f[3,:,:] + omega*feq[3,:,:]  + dt*w[3]*H*(1/np.sqrt(3))
+    f[4,:,:] = (1.0 - omega)*f[4,:,:] + omega*feq[4,:,:]  + dt*w[4]*H*(1/np.sqrt(3))
+    f[5,:,:] = (1.0 - omega)*f[5,:,:] + omega*feq[5,:,:]  + dt*w[5]*H*(1/np.sqrt(3))
+    f[6,:,:] = (1.0 - omega)*f[6,:,:] + omega*feq[6,:,:]  + dt*w[6]*H*(1/np.sqrt(3))
+    f[7,:,:] = (1.0 - omega)*f[7,:,:] + omega*feq[7,:,:]  + dt*w[7]*H*(1/np.sqrt(3))
+    f[8,:,:] = (1.0 - omega)*f[8,:,:] + omega*feq[8,:,:]  + dt*w[8]*H*(1/np.sqrt(3))
+
+    #Streaming step  Need to scale with ck velocities.# 
+    f[1,:,:]=np.roll(f[1,:,:],1,axis=0)
+    f[2,:,:] = np.roll(f[2,:,:],1,axis=1) 
+    f[3,:,:] = np.roll(f[3,:,:],-1,axis=0)
+    f[4,:,:] = np.roll(f[4,:,:],-1,axis=1)
+
+    f[5,:,:]=np.roll(f[5,:,:],1,axis=0)
+    f[5,:,:]=np.roll(f[5,:,:],1,axis=1)
+
+    f[6,:,:] = np.roll(f[6,:,:],-1,axis=0)
+    f[6,:,:] = np.roll(f[6,:,:],1,axis=1)
+
+    f[7,:,:] = np.roll(f[7,:,:],-1,axis=0)
+    f[7,:,:] = np.roll(f[7,:,:],-1,axis=1)
+    
+    f[8,:,:]= np.roll(f[8,:,:],1,axis=0)
+    f[8,:,:]= np.roll(f[8,:,:],-1,axis=1)
+  
+
+    # Boundary conditions
+    # Left  i=0, adiabatic  
+    f[:,0,:] = f[:,1,:]
+    # Right,i=n, adiabatic 
+    f[:,n,:] = f[:,n-1,:]
+    # Base - constant temperature
+    if (botflux==0):
+        f[6,:,0] = (w[6] + w[8])*T_base - f[8,:,0]
+        f[5,:,0] = (w[5] + w[7])*T_base - f[7,:,0]
+        f[2,:,0] = (w[2] + w[4])*T_base - f[4,:,0]
+    ##f[1,:,0] = w[1]*T_base + w[3]*T_base - f[3,:,0]
+    ##f[0,:,m] = 0.0
+
+    #Bottom - constant Q
+    #Mohamad style
+    #f1[m] = f1[m-1] + f2[m-1] - f2[m] + Qbase*dx/k        # von neumann boundary condition, x=L,
+    if (botflux==1):
+        #f[2,:,0] = f[2,:,1] + f[4,:,1] - f[4,:,0] + Qbase*dy/k
+        f[2,:,0] = f[2,:,1] + f[4,:,1] - f[4,:,0] + (2./3.)*Qbase*dy
+        f[6,:,0] = f[6,:,1] + f[8,:,1] - f[8,:,0] + (1./6.)*Qbase*dy
+        f[5,:,0] = f[5,:,1] + f[7,:,1] - f[7,:,0] + (1./6.)*Qbase*dy
+
+    #Lalami, 2020, Computers and Fluids
+    #L6 = (1/(w[2]/w[6] + w[5]/w[6] + 1)) * (1. + (k/(Qbase*dy))*(f[0,:,0]+f[1,:,0]+f[3,:,0]+f[4,:,0]+f[7,:,0]+f[8,:,0]))
+    #L2 = w[2]*L6/w[6]
+    #L5 = w[5]*L6/w[6]
+    if (botflux==2):
+        L2 = 2/3.
+        L6=1./6.
+        L5=1./6.
+        f[2,:,0] =  f[2,:,1] + f[4,:,1] -f[4,:,0] + L2*Qbase*dy/k
+        f[6,:,0] =  f[6,:,1] + f[8,:,1] -f[8,:,0] + L6*Qbase*dy/k
+        f[5,:,0] =  f[5,:,1] + f[7,:,1] -f[7,:,0] + L5*Qbase*dy/k
+    if (botflux==3):
+        L2=1./3.
+        L6=1./3
+        L5=1./3
+        f[2,:,0] =  f[2,:,1] + f[4,:,1] -f[4,:,0] + L2*Qbase*dy/k
+        f[6,:,0] =  f[6,:,1] + f[8,:,1] -f[8,:,0] + L6*Qbase*dy/k
+        f[5,:,0] =  f[5,:,1] + f[7,:,1] -f[7,:,0] + L5*Qbase*dy/k
+
+    # Sukop and Thorne style
+    #f[4,:,m] = f[2,:,m] -(2./3.)*(Qbase*dy/k)
+    #f[7,:,m] = f[5,:,m] + 0.5*(f[1,:,0] - f[3,:,0]) -(1/6.)*(Qbase*dy/k)
+    #f[8,:,m] = f[6,:,m] - 0.5*(f[1,:,0] - f[3,:,0]) -(1/6.)*(Qbase*dy/k)
+
+
+    # TOP (at m in this configuration) - constant temperature  
+    if (topflux == 0):
+        f[7,:,m] = w[7]*T_top + w[5]*T_top - f[5,:,m]
+        f[4,:,m] = w[4]*T_top + w[2]*T_top - f[2,:,m]
+        f[8,:,m] = w[8]*T_top + w[6]*T_top - f[6,:,m]
+    elif (topflux ==1):
+        f[4,:,m] = f[2,:,m] + (2./3.)*(T_top)
+        f[7,:,m] = f[5,:,m] + (1/6.)*(T_top)
+        f[8,:,m] = f[6,:,m]  + (1/6.)*(T_top)
 
 
     T = f[0,:,:] + f[1,:,:] + f[2,:,:] + f[3,:,:] + f[4,:,:] +f[5,:,:] + f[6,:,:]+f[7,:,:]+f[8,:,:]

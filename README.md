@@ -3,9 +3,20 @@ A python distribution for lattice-boltzmann modelling of planetary processes
 
 Currently has 1D (D1Q2) and 2D (D2Q9) solvers for the advection-diffusion problems, from plate cooling and contact metamorphism, to subduction zones.
 
-Install:
+
+# Installation:
+
+The preferred procedure for installation is using pip as follows:
 
 pip install planet_LB
+
+
+
+# Requirements
+
+The library has minimal requirements, using python 3.+ and the basic python libraries numpy (tested on 1.7.2), scipy (tested on 1.3.1), and matplotlib (tested on version 3.4.2), and the code loops are accelerated using numba (tested on 0.45.1). 
+
+# Examples
 
 See the ipynb for usage and examples, and some 1D and 2D benchmarks.
 
@@ -18,6 +29,8 @@ Or, if subduction floats (sinks?) your boat, here's one we prepared earlier:
 ![subduction](https://user-images.githubusercontent.com/30849698/164226119-fc9efb78-9431-4759-8e3d-37d3f07e10af.png)
 
 Full code in the ipynb directory. Enjoy. Or not. Up to you, really. 
+
+
 
 
 # A few worthy references
