@@ -45,6 +45,8 @@ The basic Lattice Boltzmann approach involves a statistical mechanics approach t
 $$ f_i(r+c_i \Delta t, t + \Delta t) = f_i(r,t) + (\Delta t/{\tau})[f^{eq}_i(r,t) - f_i(r,t)]$$ 
 
 The underlying grid is structured as shown in Figure 3, and the node numbering scheme is used both in the collision operator step (each node is weighted differently relative to the cell centre), and in the streaming step with advects the underlying distribution function, subject to boundary conditions. For full details of Lattice-Boltzmann implementation, see @Mohamad:2019.
+
+
 ![Figure 3. Examples of LB grid structure and node numbering](D1Q2_D2Q9.png)
 *Figure 3. Examples of LB grid structure and node numbering*
 
