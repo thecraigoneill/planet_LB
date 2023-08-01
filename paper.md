@@ -40,7 +40,7 @@ A large number of worked Jupyter notebooks are provided, which provide solutions
 
 # Functionality and Usage
 
-The basic Lattice Boltzmann approach involves a statistical mechanics approach to molecular distributions, where the Boltzmann transport equation is solved using discrete 'collision' and 'streaming' steps (eg. see dhumieres:1992, @chen:1998, @guo:2000, @dong:2008). We use the Bhatnagar, Gross, and Krook (BGK) approximation for the collision operator (see [@Mohamad:2019]), and under this approximation the discrete form of the equation under one dimension is:
+The basic Lattice Boltzmann approach involves a statistical mechanics approach to molecular distributions, where the Boltzmann transport equation is solved using discrete 'collision' and 'streaming' steps (eg. see @dhumieres:1992, @chen:1998, @guo:2000, @dong:2008). We use the Bhatnagar, Gross, and Krook (BGK) approximation for the collision operator (see [@Mohamad:2019]), and under this approximation the discrete form of the equation under one dimension is:
 
 $$ f_i(r+c_i \Delta t, t + \Delta t) = f_i(r,t) + (\Delta t/{\tau})[f^{eq}_i(r,t) - f_i(r,t)]$$ 
 
