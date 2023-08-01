@@ -31,6 +31,8 @@ Or, if subduction floats (sinks?) your boat, here's one we prepared earlier:
 Full code in the ipynb directory. Enjoy. Or not. Up to you, really. 
 
 
+# Community contributions
+We totally welcome community contributions to the code base. Contact craig with specific ideas/requests, to confirm if the functionality exists. If not, you are welcome to fork the repo, clone it locally (git clone <link to repo>), create a new branch (git checkout -b new-user-contribution), and make modifications as you wish. To send these back to the main branch, you need to stage (eg. git add .\Contributors.md), commit (eg. git commit -m “Add XYZ to Contributors List”), and then push the changes back to your fork. Then create a pull request to send these back to the main for checking (and perhaps drop me a note about the functionality changes).  More info on the process here: https://dev.to/codesphere/how-to-start-contributing-to-open-source-projects-on-github-534n
 
 
 # A few worthy references
