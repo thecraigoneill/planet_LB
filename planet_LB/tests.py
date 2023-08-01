@@ -22,10 +22,13 @@ def test1():
     H=0. # internal heat production
     Tinit = 1300 # Initial temperature
     TSurf = 0.0 #Surface temperature
+    K=1e-6
+    k=3
+    Qbase=0
 
     # Simulation 1
 
-    LB = pLB.init_1D_LB(dt,dx,tstep,m,Tinit,TSurf,H)
+    LB = pLB.init_1D_LB(dt,dx,tstep,m,Tinit,TSurf,H,Qbase,K,k)
     T=pLB.LB1D(LB)
     #print(LB['T'])
     print(T)
