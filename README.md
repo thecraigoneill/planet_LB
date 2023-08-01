@@ -10,8 +10,10 @@ The preferred procedure for installation is using pip as follows:
 
 pip install planet_LB
 
-You can install from the git repository download as well, using the command
+You can install from the git repository download as well, using the command:
+
 pip install .
+
 from the main directory.
 
 
