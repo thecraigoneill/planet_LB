@@ -59,6 +59,6 @@ The GitHub project implements a continuous integration approach to code developm
 The teaching experience of the code has been that it has lowered the threshold to quantitative geodynamics, in both keeping the mechanics of solvers under the hood and focussing on relevant geodynamic factors to the problem at hand (eg. experimenting with plate age and thermal structure of subducting slabs, rather than spending time developing/learning solutions to the diffusion equation). The readability of the front-end Python code, and the ability to extensively document Jupyter notebooks, have likewise enabled 3rd-year Earth science majors to focus on the geodynamics of these systems, rather than spending excessive time on development or numerical underpinnings. 
 
 # Acknowledgements
-CO thanks the 3rd geodynamic cohorts he has inflicted python on over the years.
+CO acknowledges the extremely helpful reviews from A/Prof Juan F. Paniagua-Arroyave and Dr Ben Mathers, as well as editorial guidance from Dr Nicolás Guarín-Zapata. He also thanks the 3rd year geodynamic cohorts he has inflicted python on over the years.
 
 # References
