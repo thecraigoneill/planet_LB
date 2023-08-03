@@ -22,7 +22,7 @@ Geodynamics involves the application of static and dynamic analysis techniques t
 
 However, a subset of problems directly relevant to geology may be approached by basic advection-diffusion solvers, particularly in 2D (Figure 1). Such problems include basic heat diffusion from an initial condition (eg. igneous intrusion), advection of heat in a known or prescribed flow field (eg. subduction zones, Figure 2), or the development of a flow field given appropriate system boundary conditions (eg. convection, groundwater flow) [@Turcotte:2002; @Fowler:2005]. These problems are often of direct relevance to geologists, both academically and in industry, but also lay the foundations for geodynamic understanding in teaching environments.
 
-![Figure 1. Simulation of a cooling crustal thrust structure](https://github.com/thecraigoneill/planet_LB/assets/30849698/950f9c7a-52f1-4872-9c83-c60801aef7c4)
+![Figure 1. Simulation of a cooling crustal thrust structure](Figure1.png)
 
 *Figure 1. Simulation of a cooling crustal thrust structure. Contours and colorfield represent temperature (in celsius).*
 
@@ -36,7 +36,7 @@ The goal of ``Planet_LB`` is to bridge the accessibility gap in geodynamics tool
 
 A large number of worked Jupyter notebooks are provided, which provide solutions to a number of classic geodynamical problems. The problems introduced in the notebooks include 1D time-dependent thermal modelling and oceanic geotherms, 2D thermal modelling of thrusted continental crust (Figure 1), the thermal decay of an intruded granite body, forced 2D cavity-driven lid flow, and simulating the thermal structure of a subduction zone (Figure 2). Both 1D oceanic geotherms, and 2D lid-driven cavity flow, have analytical solutions and are used as benchmarks for the routines. The notebooks are intended to both a) provide clear templates to obtain quantitative thermal or dynamic information from common 1D or 2D geodynamic problems, and b) provide a verbose introduction to the numeric expression of geodynamic problems, and develop student's capacity in modelling and simulation. 
 
-![Figure 2. Example of a modelled subduction zone](https://github.com/thecraigoneill/planet_LB/assets/30849698/8871dcca-d8c8-43a4-9e32-d05c8cfea300)
+![Figure 2. Example of a modelled subduction zone](Figure2.png)
 
 *Figure 2. Example of a modelled subduction zone. Contours and colorfield represent temperature (in celsius).*
 
