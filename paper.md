@@ -20,10 +20,11 @@ bibliography: paper.bib
 # Summary
 Geodynamics involves the application of static and dynamic analysis techniques to geological problems, generally using a continuum approach. Modern geodynamics codes face challenges of small-scale resolution of geological features, non-linear rheologies of geomaterials, and problem dimensionality [@Moresi:2007]. Generally, these codes are optimised to run high-performance computing environments and have both significant computing overheads and steep learning curves for initiates or students.
 
-However, a subset of problems directly relevant to geology may be approached by basic advection-diffusion solvers, particularly in 2D. Such problems include basic heat diffusion from an initial condition (eg. igneous intrusion), advection of heat in a known or prescribed flow field (eg. subduction zones), or the development of a flow field given appropriate system boundary conditions (eg. convection, groundwater flow) [@Turcotte:2002; @Fowler:2005]. These problems are often of direct relevance to geologists, both academically and in industry, but also lay the foundations for geodynamic understanding in teaching environments.
+However, a subset of problems directly relevant to geology may be approached by basic advection-diffusion solvers, particularly in 2D (Figure 1). Such problems include basic heat diffusion from an initial condition (eg. igneous intrusion), advection of heat in a known or prescribed flow field (eg. subduction zones, Figure 2), or the development of a flow field given appropriate system boundary conditions (eg. convection, groundwater flow) [@Turcotte:2002; @Fowler:2005]. These problems are often of direct relevance to geologists, both academically and in industry, but also lay the foundations for geodynamic understanding in teaching environments.
 
-![Figure 1. Simulation of a cooling crustal thrust structure](Fowler_thrust.png)
-*Figure 1. Simulation of a cooling crustal thrust structure*
+![Figure 1. Simulation of a cooling crustal thrust structure](https://github.com/thecraigoneill/planet_LB/assets/30849698/950f9c7a-52f1-4872-9c83-c60801aef7c4)
+
+*Figure 1. Simulation of a cooling crustal thrust structure. Contours and colorfield represent temperature (in celsius).*
 
 ``Planet_LB`` introduces D1Q2 and D2Q9 Lattice-Boltzmann solvers for the solution of basic planetary geodynamics problems [@Mohamad:2019]. The functionality is packaged to take the complexity of the solution step out of the basic geodynamic exercise, operating as a gateway code to the world of Earth-science simulation and modelling.  
 
@@ -33,10 +34,11 @@ The pedagogy of geodynamics teaching may be considered as two end-members: i) ap
 
 The goal of ``Planet_LB`` is to bridge the accessibility gap in geodynamics tools both for the classroom and for non-numerical geoscientists. It can be run in an existing Python environment (eg. Anaconda) and requires minimal dependencies beyond basic scientific and numerical Python libraries. It is available for installation via pip. Very few existing geodynamic codes utilise Lattice-Boltzmann methods (the majority implementing finite element (eg. @Moresi:2007), finite volume or finite difference methods), and thus ``Planet_LB`` fills an important instructional gap in demonstrating the application of Lattice-Boltzmann approaches to geoscience problems.  
 
-A large number of worked Jupyter notebooks are provided, which provide solutions to a number of classic geodynamical problems. The problems introduced in the notebooks include 1D time-dependent thermal modelling and oceanic geotherms, 2D thermal modelling of thrusted continental crust, the thermal decay of an intruded granite body, forced 2D cavity-driven lid flow, and simulating the thermal structure of a subduction zone. Both 1D oceanic geotherms, and 2D lid-driven cavity flow, have analytical solutions and are used as benchmarks for the routines. The notebooks are intended to both a) provide clear templates to obtain quantitative thermal or dynamic information from common 1D or 2D geodynamic problems, and b) provide a verbose introduction to the numeric expression of geodynamic problems, and develop student's capacity in modelling and simulation. 
+A large number of worked Jupyter notebooks are provided, which provide solutions to a number of classic geodynamical problems. The problems introduced in the notebooks include 1D time-dependent thermal modelling and oceanic geotherms, 2D thermal modelling of thrusted continental crust (Figure 1), the thermal decay of an intruded granite body, forced 2D cavity-driven lid flow, and simulating the thermal structure of a subduction zone (Figure 2). Both 1D oceanic geotherms, and 2D lid-driven cavity flow, have analytical solutions and are used as benchmarks for the routines. The notebooks are intended to both a) provide clear templates to obtain quantitative thermal or dynamic information from common 1D or 2D geodynamic problems, and b) provide a verbose introduction to the numeric expression of geodynamic problems, and develop student's capacity in modelling and simulation. 
 
-![Figure2. Example of a modelled subduction zone](subduction.png) 
-*Figure 2. Example of a modelled subduction zone*
+![Figure 2. Example of a modelled subduction zone](https://github.com/thecraigoneill/planet_LB/assets/30849698/8871dcca-d8c8-43a4-9e32-d05c8cfea300)
+
+*Figure 2. Example of a modelled subduction zone. Contours and colorfield represent temperature (in celsius).*
 
 # Functionality and Usage
 
