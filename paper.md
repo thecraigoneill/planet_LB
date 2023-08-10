@@ -22,9 +22,7 @@ Geodynamics involves the application of static and dynamic analysis techniques t
 
 However, a subset of problems directly relevant to geology may be approached by basic advection-diffusion solvers, particularly in 2D (Figure 1). Such problems include basic heat diffusion from an initial condition (e.g. igneous intrusion), advection of heat in a known or prescribed flow field (e.g. subduction zones, Figure 2), or the development of a flow field given appropriate system boundary conditions (e.g. convection, groundwater flow) [@Turcotte:2002; @Fowler:2005]. These problems are often of direct relevance to geologists, both academically and in industry, but also lay the foundations for geodynamic understanding in teaching environments.
 
-![Figure 1. Simulation of a cooling crustal thrust structure](Figure1.png)
-
-*Figure 1. Simulation of a cooling crustal thrust structure. Contours and colorfield represent temperature (in Celsius).*
+![Simulation of a cooling crustal thrust structure. Contours and colorfield represent temperature (in Celsius).](Figure1.png)
 
 ``Planet_LB`` introduces D1Q2 and D2Q9 Lattice-Boltzmann solvers for the solution of basic planetary geodynamics problems [@Mohamad:2019]. The functionality is packaged to take the complexity of the solution step out of the basic geodynamic exercise, operating as a gateway code to the world of Earth-science simulation and modelling.  
 
@@ -36,9 +34,8 @@ The goal of ``Planet_LB`` is to bridge the accessibility gap in geodynamics tool
 
 A large number of worked Jupyter notebooks are provided, which provide solutions to a number of classic geodynamical problems. The problems introduced in the notebooks include 1D time-dependent thermal modelling and oceanic geotherms, 2D thermal modelling of thrusted continental crust (Figure 1), the thermal decay of an intruded granite body, forced 2D cavity-driven lid flow, and simulating the thermal structure of a subduction zone (Figure 2). Both 1D oceanic geotherms, and 2D lid-driven cavity flow, and geothermal heat flow, have analytical solutions and are used as benchmarks for the routines. The notebooks are intended to both a) provide clear templates to obtain quantitative thermal or dynamic information from common 1D or 2D geodynamic problems, and b) provide a verbose introduction to the numeric expression of geodynamic problems, and develop student's capacity in modelling and simulation. 
 
-![Figure 2. Example of a modelled subduction zone](Figure2.png)
+![Example of a modelled subduction zone. Contours and colorfield are temperature (in C).](Figure2.png)
 
-*Figure 2. Example of a modelled subduction zone. Contours and colorfield are temperature (in C).*
 
 # Functionality and Usage
 
@@ -49,9 +46,7 @@ $$ f_i(r+c_i \Delta t, t + \Delta t) = f_i(r,t) + (\Delta t/{\tau})[f^{eq}_i(r,t
 The underlying grid is structured as shown in Figure 3, and the node numbering scheme is used both in the collision operator step (each node is weighted differently relative to the cell centre) and in the streaming step with advects the underlying distribution function, subject to boundary conditions. For full details of Lattice-Boltzmann implementation, see @Mohamad:2019.
 
 
-![Figure 3. Examples of LB grid structure and node numbering](D1Q2_D2Q9.png)
-
-*Figure 3. Examples of the LB grid structure and node numbering.*
+![Figure 3. Examples of LB grid structure and node numbering.](D1Q2_D2Q9.png)
 
 As noted, the library can be installed via pip (``pip install planet_LB``), and extensive examples of usage are found in the associated Jupyter notebooks on GitHub. The code itself develops a Lattice-Boltzmann data structure which contains the details of the simulation parameters, grid, initial conditions, and boundary conditions, and this may be iteratively sent to an appropriate solver (D2Q9, or D1Q2, for either diffusion, advection, or some combination of these depending on the geodynamic problem), allowing the time-evolution of a simulation to be tracked. As the future system state depends on its current state, system information is updated and iteratively solved within a loop of small timesteps, defined by flow stability conditions (further details of the time-stepping are developed in the file ``thrust_fault.ipynb``).
 
