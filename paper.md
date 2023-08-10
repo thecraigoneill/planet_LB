@@ -51,7 +51,7 @@ The underlying grid is structured as shown in Figure 3, and the node numbering s
 
 ![Figure 3. Examples of LB grid structure and node numbering](D1Q2_D2Q9.png)
 
-*Figure 3. Examples of the LB grid structure and node numbering*
+*Figure 3. Examples of the LB grid structure and node numbering.*
 
 As noted, the library can be installed via pip (``pip install planet_LB``), and extensive examples of usage are found in the associated Jupyter notebooks on GitHub. The code itself develops a Lattice-Boltzmann data structure which contains the details of the simulation parameters, grid, initial conditions, and boundary conditions, and this may be iteratively sent to an appropriate solver (D2Q9, or D1Q2, for either diffusion, advection, or some combination of these depending on the geodynamic problem), allowing the time-evolution of a simulation to be tracked. As the future system state depends on its current state, system information is updated and iteratively solved within a loop of small timesteps, defined by flow stability conditions (further details of the time-stepping are developed in the file ``thrust_fault.ipynb``).
 
