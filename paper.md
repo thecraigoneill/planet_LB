@@ -50,7 +50,6 @@ The underlying grid is structured as shown in Figure 3, and the node numbering s
 
 
 ![Figure 3. Examples of LB grid structure and node numbering](D1Q2_D2Q9.png)
-)
 
 *Figure 3. Examples of the LB grid structure and node numbering*
 
