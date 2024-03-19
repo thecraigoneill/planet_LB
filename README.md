@@ -12,7 +12,7 @@ The preferred procedure for installation is using pip as follows:
 
 You can install from the git repository download as well, using the command:
 
-    pip install
+    pip install .
 
 from the main directory.
 
